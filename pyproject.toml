@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "wifiphisher"
+version = "2.0.0"
+description = "Rogue Access Point framework for Wi-Fi security testing"
+readme = "README.md"
+license = {text = "GPL-3.0"}
+requires-python = ">=3.8"
+authors = [
+    {name = "iXludaTech", email = "ixludatech@proton.me"},
+]
+keywords = ["wifiphisher", "wifi", "security", "phishing", "rogue", "access-point", "pentesting"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Security",
+    "Topic :: System :: Networking",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+]
+dependencies = [
+    "scapy",
+    "tornado>=6.0",
+    "roguehostapd",
+    "pyric",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "flake8",
+    "pylint",
+]
+
+[project.urls]
+Homepage = "https://github.com/iXludaTech/wifiphisher"
+Repository = "https://github.com/iXludaTech/wifiphisher"
+Issues = "https://github.com/iXludaTech/wifiphisher/issues"
+
+[project.scripts]
+wifiphisher = "wifiphisher.pywifiphisher:run"
+
+[tool.setuptools.packages.find]
+include = ["wifiphisher*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+wifiphisher = ["data/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
